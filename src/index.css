@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Delicious+Handrawn&family=JetBrains+Mono:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-typewriter: "Courier Prime", monospace;
+  --font-handmade: "Delicious Handrawn", cursive;
+}
+
+/* Base resets & improvements */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: #f43f5e;
+  color: #ffffff;
+}
+
+/* Custom styles for scrapbooking/stickers effects */
+.custom-shadow-heavy {
+  box-shadow: 4px 4px 0px 0px #000000;
+}
+
+.custom-shadow-extra-heavy {
+  box-shadow: 8px 8px 0px 0px #000000;
+}
+
+.custom-shadow-sticker {
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.15)) drop-shadow(0px 1px 2px rgba(0,0,0,0.1));
+}
+
+/* Typewriter index card background */
+.index-card-pattern {
+  background-color: #fafaf9;
+  background-image: 
+    linear-gradient(rgba(14, 165, 233, 0.15) 1px, transparent 1px);
+  background-size: 100% 2rem;
+  line-height: 2rem;
+}
+
+/* Folder tab cutout style clip-paths */
+.folder-tab {
+  clip-path: polygon(0% 0%, 50% 0%, 55% 100%, 100% 100%);
+}
+
+/* Custom stamp text ring generator styles */
+.text-ring {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: bold;
+}

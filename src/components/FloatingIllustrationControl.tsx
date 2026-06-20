@@ -1,0 +1,377 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useProjects } from '../context/ProjectContext';
+import { Settings, X, ChevronUp, ChevronDown, Image as ImageIcon, Sparkles, Undo2, LayoutGrid, FileText } from 'lucide-react';
+
+// Read all image assets inside the images folder dynamically
+const imageModules = (import.meta as any).glob('/src/assets/images/*', { eager: true });
+const AVAILABLE_GALLERY_IMAGES = Object.entries(imageModules)
+  .map(([path, mod]: any) => {
+    const filename = path.split('/').pop() || '';
+    const resolvedUrl = mod.default || mod;
+    return {
+      path,
+      filename,
+      url: resolvedUrl,
+    };
+  })
+  .sort((a, b) => a.filename.localeCompare(b.filename));
+
+export default function FloatingIllustrationControl() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('out-01');
+
+  const {
+    projects,
+    updateProjectDetails,
+    moveProjectToColumn,
+    reorderProject,
+    resetProjects
+  } = useProjects();
+
+  const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 font-mono select-none pointer-events-auto text-stone-900">
+      <AnimatePresence>
+        {/* Expanded Controls Card */}
+        {isOpen && selectedProject && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 15 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            className="w-80 sm:w-96 bg-white border-2 border-stone-900 rounded-lg shadow-[6px_6px_0_0_rgba(28,25,23,1)] overflow-hidden mb-3"
+          >
+            {/* Header Banner */}
+            <div className="bg-stone-900 text-white px-4 py-3 flex items-center justify-between border-b-2 border-stone-100">
+              <div className="flex items-center gap-2">
+                <LayoutGrid size={16} className="text-rose-400 animate-pulse" />
+                <span className="font-sans font-black text-xs uppercase tracking-widest">
+                  ILLUSTRATION STUDIO
+                </span>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="hover:text-rose-400 transition-colors p-0.5 cursor-pointer"
+                title="Minimize panel"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Quick reset option */}
+            <div className="p-3 border-b border-stone-100 bg-stone-50 flex items-center justify-between gap-3 font-mono">
+              <span className="text-[9px] text-stone-500 font-black uppercase tracking-wider">
+                CURATE YOUR GALLERY GRID
+              </span>
+              <button
+                onClick={resetProjects}
+                className="py-1 px-2.5 bg-white hover:bg-stone-100 border border-stone-300 rounded text-[9px] font-sans font-black uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
+                title="Restore default gallery items & order"
+              >
+                <Undo2 size={10} />
+                RESET GRID
+              </button>
+            </div>
+
+            {/* Editing Panel Area */}
+            <div className="p-4 space-y-4 max-h-[380px] overflow-y-auto custom-scroll text-left">
+              
+              {/* Dropdown: Choose Artwork to Customize */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] uppercase font-extrabold text-stone-400 tracking-wider flex items-center gap-1">
+                  <span>1. CHOOSE ILLUSTRATION TO EDIT:</span>
+                </label>
+                <select
+                  value={selectedProjectId}
+                  onChange={(e) => setSelectedProjectId(e.target.value)}
+                  className="w-full text-xs font-mono font-bold py-1.5 px-2.5 bg-white border-2 border-stone-900 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer"
+                >
+                  {projects.map((proj) => (
+                    <option key={proj.id} value={proj.id}>
+                      {proj.title} (Col {proj.column})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="border-t border-stone-100 pt-3 space-y-3">
+                {/* Visual Accent Title */}
+                <div className="text-[10px] font-bold text-stone-800 uppercase tracking-tight flex items-center gap-1 pb-1 border-b border-stone-100">
+                  <Sparkles size={11} className="text-rose-500" />
+                  <span>2. CUSTOMIZE TITLE & INFO</span>
+                </div>
+
+                {/* Name / Title Form Field */}
+                <div className="space-y-1">
+                  <span className="text-[9px] font-bold text-stone-400">ILLUSTRATION NAME (TITLE):</span>
+                  <input
+                    type="text"
+                    value={selectedProject.title}
+                    onChange={(e) => updateProjectDetails(selectedProject.id, { title: e.target.value })}
+                    className="w-full text-xs font-sans font-bold py-1.5 px-2.5 bg-white border border-stone-300 rounded focus:border-stone-900 focus:outline-none"
+                    placeholder="Enter Custom Title"
+                  />
+                </div>
+
+                {/* Description Form Field */}
+                <div className="space-y-1">
+                  <span className="text-[9px] font-bold text-stone-400">DESCRIPTION COGNITIVE LOG:</span>
+                  <textarea
+                    value={selectedProject.description}
+                    onChange={(e) => updateProjectDetails(selectedProject.id, { description: e.target.value })}
+                    className="w-full text-xs font-sans font-normal py-1.5 px-2.5 bg-white border border-stone-300 rounded focus:border-stone-900 focus:outline-none min-h-[50px] max-h-[100px] resize-y"
+                    placeholder="Enter brief artwork description"
+                  />
+                </div>
+              </div>
+
+              {/* Grid Placement / Ordering Sections */}
+              <div className="border-t border-stone-100 pt-3 space-y-2.5">
+                <div className="text-[10px] font-bold text-stone-800 uppercase tracking-tight flex items-center gap-1 pb-1 border-b border-stone-100">
+                  <FileText size={11} className="text-zinc-500" />
+                  <span>3. POSITION & GRID PLACEMENT</span>
+                </div>
+
+                {/* Move Column Segment */}
+                <div className="space-y-1">
+                  <span className="text-[9px] font-bold text-stone-400">MOVE TO MASONRY COLUMN:</span>
+                  <div className="grid grid-cols-3 gap-1 bg-stone-100 p-1 rounded font-mono text-[9px] text-center border border-stone-200">
+                    {([1, 2, 3] as const).map((colVal) => (
+                      <button
+                        key={colVal}
+                        type="button"
+                        onClick={() => moveProjectToColumn(selectedProject.id, colVal)}
+                        className={`py-1 rounded cursor-pointer leading-none uppercase font-bold transition-all ${
+                          selectedProject.column === colVal
+                            ? 'bg-zinc-900 text-white shadow-sm'
+                            : 'text-stone-500 hover:text-stone-800 hover:bg-stone-200/50'
+                        }`}
+                      >
+                        COLUMN {colVal}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sort Order inside Column Button Pair */}
+                <div className="space-y-1">
+                  <span className="text-[9px] font-bold text-stone-400">RE-ORDER IN CURRENT COLUMN:</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => reorderProject(selectedProject.id, 'up')}
+                      className="py-1.5 px-3 bg-white hover:bg-stone-100 border border-stone-300 rounded text-[9px] font-sans font-black uppercase tracking-wider flex items-center justify-center gap-1 cursor-pointer transition-colors shadow-sm"
+                    >
+                      <ChevronUp size={12} className="text-stone-600" />
+                      MOVE UP
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => reorderProject(selectedProject.id, 'down')}
+                      className="py-1.5 px-3 bg-white hover:bg-stone-100 border border-stone-300 rounded text-[9px] font-sans font-black uppercase tracking-wider flex items-center justify-center gap-1 cursor-pointer transition-colors shadow-sm"
+                    >
+                      <ChevronDown size={12} className="text-stone-600" />
+                      MOVE DOWN
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image swapping section */}
+              <div className="border-t border-stone-100 pt-3 space-y-2">
+                <div className="text-[10px] font-bold text-stone-800 uppercase tracking-tight flex items-center gap-1 pb-1 border-b border-stone-100">
+                  <ImageIcon size={11} className="text-zinc-500" />
+                  <span>4. CHOOSE IMAGE FILE SOURCE:</span>
+                </div>
+
+                <select
+                  value={selectedProject.image}
+                  onChange={(e) => {
+                    const newUrl = e.target.value;
+                    const updates: any = { image: newUrl };
+                    // If multi-image is active, also update the first slot if appropriate
+                    if (selectedProject.isMultiImage && selectedProject.images && selectedProject.images.length > 0) {
+                      const nextImages = [...selectedProject.images];
+                      nextImages[0] = newUrl;
+                      updates.images = nextImages;
+                    }
+                    updateProjectDetails(selectedProject.id, updates);
+                  }}
+                  className="w-full text-[11px] font-mono font-black py-1 px-1.5 bg-white border border-stone-300 rounded focus:outline-none focus:ring-1 focus:ring-rose-500 cursor-pointer"
+                  id="illustration_image_source_dropdown"
+                >
+                  {AVAILABLE_GALLERY_IMAGES.map((img) => (
+                    <option key={img.path} value={img.url}>
+                      {img.filename}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Tiny Image Preview */}
+                <div className="mt-1 flex items-center gap-2.5 bg-stone-50 p-2 border border-stone-200 rounded">
+                  <div className="w-10 h-10 rounded overflow-hidden bg-white border border-stone-300 shrink-0 flex items-center justify-center">
+                    <img
+                      src={selectedProject.image}
+                      alt="Thumbnail source"
+                      className="max-w-full max-h-full object-contain"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="text-[8px] text-stone-400 uppercase leading-normal">
+                    <div className="font-extrabold text-stone-600 truncate max-w-[200px]">
+                      {selectedProject.image.split('/').pop()}
+                    </div>
+                    <div>Source loaded under assets/images</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 5. MULTI-IMAGE GALLERY SYSTEM */}
+              <div className="border-t border-stone-100 pt-3 space-y-3">
+                <div className="text-[10px] font-bold text-stone-800 uppercase tracking-tight flex items-center gap-1 pb-1 border-b border-stone-100">
+                  <Sparkles size={11} className="text-rose-500" />
+                  <span>5. MULTI-IMAGE GALLERY SYSTEM:</span>
+                </div>
+
+                {/* Sliding Toggle Switch */}
+                <div className="flex items-center justify-between bg-stone-50 border border-stone-200 rounded p-2.5">
+                  <div className="flex flex-col text-left">
+                    <span className="font-sans font-black text-xs text-stone-900 tracking-wider">
+                      MULTI-IMAGE GALLERY
+                    </span>
+                    <span className="text-[8px] text-stone-400 font-mono uppercase mt-0.5">
+                      Enable image cycling & dots in popup
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nextVal = !selectedProject.isMultiImage;
+                      const updates: Partial<any> = { isMultiImage: nextVal };
+                      if (nextVal && (!selectedProject.images || selectedProject.images.length === 0)) {
+                        updates.images = [
+                          selectedProject.image,
+                          '/src/assets/images/Project4.png',
+                          '/src/assets/images/Project6.png'
+                        ];
+                      }
+                      updateProjectDetails(selectedProject.id, updates);
+                    }}
+                    className={`relative w-12 h-6 flex items-center rounded-full p-0.5 cursor-pointer transition-colors duration-200 focus:outline-none ${
+                      selectedProject.isMultiImage ? 'bg-rose-500' : 'bg-stone-300'
+                    }`}
+                    id="multi_image_toggle_switch"
+                  >
+                    <div
+                      className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-200 ${
+                        selectedProject.isMultiImage ? 'translate-x-6' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                {/* If active, display lists and add controls */}
+                {selectedProject.isMultiImage && (
+                  <div className="space-y-2.5 bg-stone-50 border border-stone-200 rounded p-2.5">
+                    <span className="text-[8px] font-extrabold text-stone-400 block uppercase tracking-wider">
+                      MANAGE CAROUSEL GALLERY SLOTS:
+                    </span>
+                    
+                    {(selectedProject.images || [selectedProject.image]).map((imgUrl, idx) => (
+                      <div key={idx} className="flex items-center gap-1.5 bg-white border border-stone-200 rounded p-1.5">
+                        <span className="font-sans font-black text-[10px] text-stone-400 px-1">
+                          #{idx + 1}
+                        </span>
+                        
+                        <select
+                          value={imgUrl}
+                          onChange={(e) => {
+                            const nextImages = [...(selectedProject.images || [selectedProject.image])];
+                            nextImages[idx] = e.target.value;
+                            const updates: any = { images: nextImages };
+                            if (idx === 0) {
+                              updates.image = e.target.value;
+                            }
+                            updateProjectDetails(selectedProject.id, updates);
+                          }}
+                          className="flex-1 text-[10px] font-mono font-bold py-1 px-1 bg-white border border-stone-200 rounded focus:outline-none cursor-pointer"
+                        >
+                          {AVAILABLE_GALLERY_IMAGES.map((img) => (
+                            <option key={img.path} value={img.url}>
+                              {img.filename}
+                            </option>
+                          ))}
+                        </select>
+
+                        {/* Remove Slot button */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const currentList = selectedProject.images || [selectedProject.image];
+                            if (currentList.length <= 1) return;
+                            const nextImages = currentList.filter((_, i) => i !== idx);
+                            const updates: any = { images: nextImages };
+                            if (idx === 0 && nextImages.length > 0) {
+                              updates.image = nextImages[0];
+                            }
+                            updateProjectDetails(selectedProject.id, updates);
+                          }}
+                          disabled={(selectedProject.images || [selectedProject.image]).length <= 1}
+                          className="hover:text-rose-500 text-stone-400 p-0.5 disabled:opacity-30 cursor-pointer disabled:cursor-not-allowed transition-colors"
+                          title="Delete image slot"
+                        >
+                          <X size={12} />
+                        </button>
+                      </div>
+                    ))}
+
+                    {/* Add Image Slot button */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const currentList = selectedProject.images || [selectedProject.image];
+                        const nextImages = [...currentList, '/src/assets/images/Project2.png'];
+                        updateProjectDetails(selectedProject.id, { images: nextImages });
+                      }}
+                      className="w-full py-1 text-center font-sans font-black bg-stone-900 hover:bg-rose-600 text-white rounded text-[8px] uppercase tracking-wider transition-colors cursor-pointer"
+                    >
+                      + Add Image Slot
+                    </button>
+                  </div>
+                )}
+              </div>
+
+            </div>
+
+            {/* Custom footer */}
+            <div className="text-[8px] text-stone-400 font-mono tracking-wider py-2 bg-stone-950 text-white uppercase text-center flex items-center justify-center gap-1">
+              <span>DEPT. GRID COMPILER v1.2 // SECURE</span>
+            </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Circular floating launching button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2.5 px-4 py-2.5 bg-zinc-950 hover:bg-rose-600 text-white rounded-full border-2 border-stone-900 cursor-pointer shadow-[3px_3px_0_0_rgb(28,25,23)] transition-all active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_rgb(28,25,23)]"
+        id="illustration_designer_trigger_btn"
+      >
+        <span className="p-0.5 bg-white/10 rounded-full">
+          <Settings size={16} className={`text-white ${isOpen ? 'rotate-90' : 'animate-spin-slow'}`} />
+        </span>
+        <span className="font-sans font-black text-xs uppercase tracking-wider pr-1">
+          {isOpen ? 'CLOSE STUDIO' : 'ILLUSTRATION STUDIO'}
+        </span>
+      </button>
+    </div>
+  );
+}

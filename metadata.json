@@ -1,0 +1,6 @@
+{
+  "name": "The Dept. of Strange Things Portfolio",
+  "description": "An immersive, raw comic-punk styled portfolio for illustrator and world-builder Joseph Hunter from the fictional government Department of Strange Things.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
