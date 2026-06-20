@@ -47,7 +47,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         column,
         order,
         isMultiImage: isMagicFingers ? true : undefined,
-        images: isMagicFingers ? [proj.image, '/src/assets/images/Project4.png', '/src/assets/images/Project6.png'] : undefined,
+        images: isMagicFingers ? [proj.image, 'src/assets/images/Project4.png', 'src/assets/images/Project6.png'] : undefined,
       };
     });
   });
@@ -77,8 +77,8 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
             if (!newProject.images || newProject.images.length === 0) {
               newProject.images = [
                 newProject.image,
-                '/src/assets/images/Project4.png',
-                '/src/assets/images/Project6.png'
+                'src/assets/images/Project4.png',
+                'src/assets/images/Project6.png'
               ];
             }
           }

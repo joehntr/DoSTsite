@@ -10,8 +10,8 @@ import Sticker from './Sticker';
 import { FileDown, Eye, User2, BadgeCheck } from 'lucide-react';
 import { useStickers } from '../context/StickerContext';
 
-const aboutDoSTImg = '/src/assets/images/aboutDoST.png';
-const aboutMeImg = '/src/assets/images/aboutMe.png';
+const aboutDoSTImg = 'src/assets/images/aboutDoST.png';
+const aboutMeImg = 'src/assets/images/aboutMe.png';
 
 export default function AboutFolders() {
   const [activeTab, setActiveTab] = useState<'dost' | 'me'>('dost');

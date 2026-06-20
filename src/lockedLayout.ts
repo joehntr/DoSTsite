@@ -103,15 +103,15 @@ export const LOCKED_STICKERS = {
 };
 
 export const LOCKED_CUSTOM_IMAGES = {
-  "alien": "/src/assets/images/Sticker%2004.png",
-  "pencil": "/src/assets/images/Sticker%2002.png",
-  "can": "/src/assets/images/Sticker%2003.png",
-  "ghost": "/src/assets/images/Sticker%2007.png",
-  "zombie": "/src/assets/images/Sticker%2006.png",
-  "deadInside": "/src/assets/images/Sticker%2005.png",
-  "aboutAvatar": "/src/assets/images/Sticker%2008.png",
-  "aboutSkull": "/src/assets/images/Sticker%2009.png",
-  "aboutDesign": "/src/assets/images/Sticker%2010.png"
+  "alien": "src/assets/images/Sticker%2004.png",
+  "pencil": "src/assets/images/Sticker%2002.png",
+  "can": "src/assets/images/Sticker%2003.png",
+  "ghost": "src/assets/images/Sticker%2007.png",
+  "zombie": "src/assets/images/Sticker%2006.png",
+  "deadInside": "src/assets/images/Sticker%2005.png",
+  "aboutAvatar": "src/assets/images/Sticker%2008.png",
+  "aboutSkull": "src/assets/images/Sticker%2009.png",
+  "aboutDesign": "src/assets/images/Sticker%2010.png"
 };
 
 export const LOCKED_PROJECT_MAPPING = [

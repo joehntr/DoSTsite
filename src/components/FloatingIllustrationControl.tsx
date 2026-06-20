@@ -258,8 +258,8 @@ export default function FloatingIllustrationControl() {
                       if (nextVal && (!selectedProject.images || selectedProject.images.length === 0)) {
                         updates.images = [
                           selectedProject.image,
-                          '/src/assets/images/Project4.png',
-                          '/src/assets/images/Project6.png'
+                          'src/assets/images/Project4.png',
+                          'src/assets/images/Project6.png'
                         ];
                       }
                       updateProjectDetails(selectedProject.id, updates);
@@ -337,7 +337,7 @@ export default function FloatingIllustrationControl() {
                       type="button"
                       onClick={() => {
                         const currentList = selectedProject.images || [selectedProject.image];
-                        const nextImages = [...currentList, '/src/assets/images/Project2.png'];
+                        const nextImages = [...currentList, 'src/assets/images/Project2.png'];
                         updateProjectDetails(selectedProject.id, { images: nextImages });
                       }}
                       className="w-full py-1 text-center font-sans font-black bg-stone-900 hover:bg-rose-600 text-white rounded text-[8px] uppercase tracking-wider transition-colors cursor-pointer"

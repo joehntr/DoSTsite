@@ -7,10 +7,10 @@ import { Project, FolderBlurb, ShopItem } from './types';
 
 // Asset paths
 export const ASSETS = {
-  logo: '/src/assets/images/DoSTlogo.png',
-  logoBadge: '/src/assets/images/DoSTlogoBadge.png',
-  stickerAlien: '/src/assets/images/sticker_alien_1779958948909.png',
-  stickerAvatar: '/src/assets/images/sticker_avatar_hunter_1779958970783.png',
+  logo: 'src/assets/images/DoSTlogo.png',
+  logoBadge: 'src/assets/images/DoSTlogoBadge.png',
+  stickerAlien: 'src/assets/images/sticker_alien_1779958948909.png',
+  stickerAvatar: 'src/assets/images/sticker_avatar_hunter_1779958970783.png',
 };
 
 export const PROJECTS: Project[] = [
@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
       'Exhibits sympathetic resonance with retro video synthesizers and low-fidelity audio recordings.',
       'Recommended protocols: Contain in lead-lined dark frame; avoid direct eye-contact during periods of celestial alignment.'
     ],
-    image: '/src/assets/images/Project1.png',
+    image: 'src/assets/images/Project1.png',
     medium: 'Digital Comic Art & Screenprint',
     date: '2025',
     client: 'The Dept. of Strange Things',
@@ -42,7 +42,7 @@ export const PROJECTS: Project[] = [
       'Features a signature magenta and lime chromatic offset signature.',
       'Saturates surrounding graphic media with positive, high-intensity playful kinetic feedback.'
     ],
-    image: '/src/assets/images/Project2.png',
+    image: 'src/assets/images/Project2.png',
     medium: 'Risograph Vector Illustration',
     date: '2024',
     client: 'Subway Shufflers Association',
@@ -60,7 +60,7 @@ export const PROJECTS: Project[] = [
       'Surrounded by a high-intensity hot pink visual bubble that repels rain and dew particles.',
       'Form coordinates remain perfectly stationary regardless of tectonic shifts.'
     ],
-    image: '/src/assets/images/Project3.png',
+    image: 'src/assets/images/Project3.png',
     medium: 'Ink, Starry Pattern Overlay & 3D Offset',
     date: '2025',
     client: 'Self-Initiated Graphic Study',
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
       'Geometric flows trigger brief periods of pleasant aesthetic daydreaming in sentient observers.',
       'Constructed strictly from interlocking pill grids and continuous sine-waves.'
     ],
-    image: '/src/assets/images/Project4.png',
+    image: 'src/assets/images/Project4.png',
     medium: 'Screenprint & Dynamic Pattern Design',
     date: '2023',
     client: 'Inconspicuous Gear Corp.',
@@ -96,7 +96,7 @@ export const PROJECTS: Project[] = [
       'Text emblazoned on collar collar triggers strong commands of adventure and rebellion in reader subjects.',
       'Retained original vocal cords which occasionally recite radio transmissions from 1952.'
     ],
-    image: '/src/assets/images/Project5.png',
+    image: 'src/assets/images/Project5.png',
     medium: 'Sumi Ink & Digital Screenprint Duo-Tone',
     date: '2024',
     client: '104th Phantom Squadron',
@@ -114,7 +114,7 @@ export const PROJECTS: Project[] = [
       'When picked up, users experience an immediate, intense urge to organize files alphabetically.',
       'Responds exceptionally well to classic rubber erasers.'
     ],
-    image: '/src/assets/images/Project6.png',
+    image: 'src/assets/images/Project6.png',
     medium: '3D Concept Art & Graphic Poster',
     date: '2025',
     client: 'D.ST Creative Advisory',
@@ -132,7 +132,7 @@ export const PROJECTS: Project[] = [
       'Slightly warm to the touch (constant 31°C).',
       'Releases a mild scent of fresh mountain pine and old comic papers.'
     ],
-    image: '/src/assets/images/Project7.png',
+    image: 'src/assets/images/Project7.png',
     medium: 'American Traditional Ink & Dotwork',
     date: '2024',
     client: 'Iron & Petals Parlor',
@@ -149,7 +149,7 @@ export const PROJECTS: Project[] = [
       'Underwent thorough validation checks by the Senior Compiler.',
       'Maintains pristine geometric properties regardless of medium rotation.'
     ],
-    image: '/src/assets/images/Project8.png',
+    image: 'src/assets/images/Project8.png',
     medium: 'Digital Ink Poster',
     date: '2025',
     client: 'The Dept. of Strange Things',
@@ -201,7 +201,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     name: 'D.ST Official Enamel Crest Pin',
     price: '$12.00',
     description: 'High-quality gold plated enamel badge featuring the official All-Seeing crest of the Department. Instantly grants minor clearance inside sector libraries.',
-    image: '/src/assets/images/DoSTlogo.png',
+    image: 'src/assets/images/DoSTlogo.png',
     tags: ['Merch', 'Accessory']
   },
   {
@@ -209,7 +209,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     name: 'The Creative Block Keychain',
     price: '$8.50',
     description: 'A miniature high-density vinyl keychain replicating the signature knotted pencil anomaly. Does not write, but guarantees curious glances.',
-    image: '/src/assets/images/gallery_pencil_knot_1779958896877.png',
+    image: 'src/assets/images/gallery_pencil_knot_1779958896877.png',
     tags: ['Interactive', 'Keychain']
   },
   {
@@ -217,7 +217,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     name: 'Screeching Skeleton Risograph Print',
     price: '$28.00',
     description: 'A limited edition heavy cardstock risograph screenprint of our orbit-recovered Screaming Skeleton anomaly. Hand stamped and signed by Joseph Hunter.',
-    image: '/src/assets/images/gallery_skeleton_1779958789302.png',
+    image: 'src/assets/images/gallery_skeleton_1779958789302.png',
     tags: ['Wall Art', 'Risograph']
   },
   {
@@ -225,7 +225,7 @@ export const SHOP_ITEMS: ShopItem[] = [
     name: 'Anomalous Sticker Pack (5-Pcs)',
     price: '$9.99',
     description: 'Die-cut vinyl stickers including the green alien head, red ghost, bone-handler hand, and a miniature goggle pilot skull. Waterproof and signal-shielded.',
-    image: '/src/assets/images/sticker_alien_1779958948909.png',
+    image: 'src/assets/images/sticker_alien_1779958948909.png',
     tags: ['Stickers', 'Waterproof']
   }
 ];
