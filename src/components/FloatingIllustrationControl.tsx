@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useProjects } from '../context/ProjectContext';
-import { Settings, X, ChevronUp, ChevronDown, Image as ImageIcon, Sparkles, Undo2, LayoutGrid, FileText } from 'lucide-react';
+import { Settings, X, ChevronUp, ChevronDown, Image as ImageIcon, Sparkles, Undo2, LayoutGrid, FileText, FileCode, Copy } from 'lucide-react';
 
 // Read all image assets inside the images folder dynamically
 const imageModules = (import.meta as any).glob('/src/assets/images/*', { eager: true });
@@ -25,6 +25,8 @@ const AVAILABLE_GALLERY_IMAGES = Object.entries(imageModules)
 export default function FloatingIllustrationControl() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string>('out-01');
+  const [isExportOpen, setIsExportOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const {
     projects,
@@ -35,6 +37,24 @@ export default function FloatingIllustrationControl() {
   } = useProjects();
 
   const selectedProject = projects.find(p => p.id === selectedProjectId) || projects[0];
+
+  const generateProjectsCode = () => {
+    const serialized = projects.map(p => {
+      // Strip out the column/order fields as they belong to LOCKED_PROJECT_MAPPING
+      const { column, order, ...cleanProj } = p;
+      
+      // Ensure image urls do not start with a leading slash so they work on GitHub Pages subfolder directories
+      if (cleanProj.image && cleanProj.image.startsWith('/')) {
+        cleanProj.image = cleanProj.image.substring(1);
+      }
+      if (cleanProj.images) {
+        cleanProj.images = cleanProj.images.map(img => img.startsWith('/') ? img.substring(1) : img);
+      }
+      return cleanProj;
+    });
+
+    return `export const PROJECTS: Project[] = ${JSON.stringify(serialized, null, 2)};`;
+  };
 
   return (
     <div className="fixed bottom-6 right-6 z-50 font-mono select-none pointer-events-auto text-stone-900">
@@ -350,6 +370,18 @@ export default function FloatingIllustrationControl() {
 
             </div>
 
+            {/* GitHub Export / Finalizing Code Option */}
+            <div className="p-3 border-t border-stone-200 bg-stone-50">
+              <button
+                onClick={() => setIsExportOpen(true)}
+                className="w-full py-1.5 px-3 bg-amber-50 hover:bg-amber-100 border-2 border-stone-900 text-stone-900 text-[10px] font-sans font-black uppercase rounded shadow-[2px_2px_0_0_rgba(28,25,23,1)] transition-transform active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0_0_rgba(28,25,23,1)] text-center flex items-center justify-center gap-1.5 cursor-pointer"
+                title="Export your current illustration information as code to permanently lock content when importing/uploading to GitHub!"
+              >
+                <FileCode size={12} className="text-amber-600" />
+                <span>🔒 LOCK & EXPORT WORK DATA</span>
+              </button>
+            </div>
+
             {/* Custom footer */}
             <div className="text-[8px] text-stone-400 font-mono tracking-wider py-2 bg-stone-950 text-white uppercase text-center flex items-center justify-center gap-1">
               <span>DEPT. GRID COMPILER v1.2 // SECURE</span>
@@ -372,6 +404,83 @@ export default function FloatingIllustrationControl() {
           {isOpen ? 'CLOSE STUDIO' : 'ILLUSTRATION STUDIO'}
         </span>
       </button>
+
+      {/* EXPORT PROJECTS DIALOG MODAL */}
+      <AnimatePresence>
+        {isExportOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-mono text-stone-900 leading-normal">
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-xl bg-white border-2 border-stone-900 rounded-lg shadow-[8px_8px_0_0_rgba(28,25,23,1)] overflow-hidden"
+            >
+              {/* Modal Head */}
+              <div className="bg-stone-900 text-white px-4 py-3 flex items-center justify-between border-b-2 border-stone-200">
+                <div className="flex items-center gap-2">
+                  <FileCode size={18} className="text-amber-400" />
+                  <span className="font-sans font-black text-xs uppercase tracking-widest">
+                    PROJECT DATA FREEZER PANEL
+                  </span>
+                </div>
+                <button
+                  onClick={() => {
+                    setIsExportOpen(false);
+                    setCopied(false);
+                  }}
+                  className="hover:text-rose-400 p-1 cursor-pointer transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Instructions Callout */}
+              <div className="p-4 bg-amber-50/50 border-b border-stone-200 text-[10px] leading-relaxed space-y-2 text-left">
+                <p className="font-sans font-black text-[11px] text-amber-900 uppercase tracking-tight">
+                  📌 How to Save/Freeze Your Work Descriptions & Image URLs:
+                </p>
+                <ol className="list-decimal list-inside space-y-1 text-stone-700 font-sans">
+                  <li>Edit your project names, descriptions, and custom images in this studio.</li>
+                  <li>Click <b className="font-black text-stone-900">"Copy Projects Code"</b> below.</li>
+                  <li>In your file explorer, open <code className="px-1.5 py-0.5 bg-stone-100 border border-stone-200 rounded font-mono font-bold text-stone-900">/src/data.ts</code>.</li>
+                  <li>Locate <code className="font-bold">export const PROJECTS: Project[] = [ ... ];</code> and overwrite that entire array by pasting this code.</li>
+                  <li><b>Done!</b> This locks your custom names, descriptions, and relative paths so they display perfectly on GitHub Pages globally for everyone!</li>
+                </ol>
+              </div>
+
+              {/* Codegen Area */}
+              <div className="p-4 space-y-3">
+                <textarea
+                  readOnly
+                  value={generateProjectsCode()}
+                  onClick={(e) => (e.target as HTMLTextAreaElement).select()}
+                  className="w-full h-64 px-3 py-2 bg-stone-50 border-2 border-stone-900 rounded font-mono text-[9px] leading-relaxed select-all focus:outline-none custom-scroll resize-none text-left"
+                />
+
+                <div className="flex items-center justify-between gap-3 pt-1">
+                  <span className="text-[9px] text-stone-500 font-sans italic text-left max-w-[240px] leading-tight">
+                    This captures active titles, logs, customized image slots, and carousel selections with safe relative paths.
+                  </span>
+                  
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(generateProjectsCode());
+                      setCopied(true);
+                      setTimeout(() => setCopied(false), 3000);
+                    }}
+                    className={`px-4 py-2 text-[10px] font-sans font-black uppercase tracking-wider rounded border-2 border-stone-900 shadow-[3px_3px_0_0_rgba(28,25,23,1)] hover:bg-stone-100 cursor-pointer transition-all active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_rgba(28,25,23,1)] flex items-center gap-1.5 ${
+                      copied ? 'bg-emerald-500 text-white hover:bg-emerald-600' : 'bg-white text-stone-900'
+                    }`}
+                  >
+                    <Copy size={12} />
+                    <span>{copied ? '✅ COPIED!' : 'COPY PROJECTS CODE'}</span>
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

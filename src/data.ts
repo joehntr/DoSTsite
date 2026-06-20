@@ -15,147 +15,153 @@ export const ASSETS = {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'out-01',
-    title: 'OUTERSPACE SKELETON',
-    subtitle: 'COGNITIVE HAZARD OUTPOST',
-    description: 'A vibrant, screeching skeletal system recovered from deep orbit. Subject is emitting low-level high-frequency cosmic noise that transforms ambient silicon structures into crystallized neon moss.',
-    additionalInfo: [
-      'Visual frequency measured at exactly 540nm (Emerald green glow).',
-      'Exhibits sympathetic resonance with retro video synthesizers and low-fidelity audio recordings.',
-      'Recommended protocols: Contain in lead-lined dark frame; avoid direct eye-contact during periods of celestial alignment.'
+    "id": "emblem-03",
+    "title": "Pencil Knot",
+    "subtitle": "COGNITIVE ALPHABET ORBITER",
+    "description": "",
+    "additionalInfo": [
+      "The central letter displays infinite depth when viewed through a polarizing stencil.",
+      "Surrounded by a high-intensity hot pink visual bubble that repels rain and dew particles.",
+      "Form coordinates remain perfectly stationary regardless of tectonic shifts."
     ],
-    image: 'src/assets/images/Project1.png',
-    medium: 'Digital Comic Art & Screenprint',
-    date: '2025',
-    client: 'The Dept. of Strange Things',
-    anomalyLevel: 'EUCLID',
-    coordinates: 'RA 18h 36m 56s | Dec +38° 47′ 1″',
-    classificationCode: 'D.ST-SKELE-1031'
+    "image": "src/assets/images/Project3.png",
+    "medium": "Ink, Starry Pattern Overlay & 3D Offset",
+    "date": "2025",
+    "client": "Self-Initiated Graphic Study",
+    "anomalyLevel": "SAFE",
+    "coordinates": "Polaris Delta-9",
+    "classificationCode": "D.ST-SYM-0099"
   },
   {
-    id: 'roll-02',
-    title: 'THE STREET GLIDER',
-    subtitle: 'KINETIC MOMENTUM PROPULSION',
-    description: 'A stylized graphic commission investigating high-velocity friction resistance of neon-colored oversized canvas footwear under gravitational anomalies.',
-    additionalInfo: [
-      'The subject demonstrates extreme propulsion thresholds to typical drag laws.',
-      'Features a signature magenta and lime chromatic offset signature.',
-      'Saturates surrounding graphic media with positive, high-intensity playful kinetic feedback.'
+    "id": "rose-07",
+    "title": "Counterspell",
+    "subtitle": "ORGANIC TEMPORAL STYLING",
+    "description": "",
+    "additionalInfo": [
+      "Stippled inks consist of microscopic dark iron oxide which responds to localized electromagnetic waves.",
+      "Slightly warm to the touch (constant 31°C).",
+      "Releases a mild scent of fresh mountain pine and old comic papers."
     ],
-    image: 'src/assets/images/Project2.png',
-    medium: 'Risograph Vector Illustration',
-    date: '2024',
-    client: 'Subway Shufflers Association',
-    anomalyLevel: 'SAFE',
-    coordinates: '40.7128° N, 74.0060° W',
-    classificationCode: 'D.ST-KINET-5509'
+    "image": "src/assets/images/Project7.png",
+    "medium": "American Traditional Ink & Dotwork",
+    "date": "2024",
+    "client": "Iron & Petals Parlor",
+    "anomalyLevel": "SAFE",
+    "coordinates": "Section 4, Row B-Grave",
+    "classificationCode": "D.ST-ECO-0221"
   },
   {
-    id: 'emblem-03',
-    title: 'STARRY EMBLEM "S"',
-    subtitle: 'COGNITIVE ALPHABET ORBITER',
-    description: 'A custom three-dimensional typographic sculpture designed to act as an anchor point for long-exposure astronomical starry skies overlay photography.',
-    additionalInfo: [
-      'The central letter displays infinite depth when viewed through a polarizing stencil.',
-      'Surrounded by a high-intensity hot pink visual bubble that repels rain and dew particles.',
-      'Form coordinates remain perfectly stationary regardless of tectonic shifts.'
+    "id": "project-08",
+    "title": "Cruzin'",
+    "subtitle": "CLASSIFIED INVESTIGATION ASSET",
+    "description": "",
+    "additionalInfo": [
+      "Underwent thorough validation checks by the Senior Compiler.",
+      "Maintains pristine geometric properties regardless of medium rotation."
     ],
-    image: 'src/assets/images/Project3.png',
-    medium: 'Ink, Starry Pattern Overlay & 3D Offset',
-    date: '2025',
-    client: 'Self-Initiated Graphic Study',
-    anomalyLevel: 'SAFE',
-    coordinates: 'Polaris Delta-9',
-    classificationCode: 'D.ST-SYM-0099'
+    "image": "src/assets/images/Project8.png",
+    "medium": "Digital Ink Poster",
+    "date": "2025",
+    "client": "The Dept. of Strange Things",
+    "anomalyLevel": "SAFE",
+    "coordinates": "Sector 8-K Archive",
+    "classificationCode": "D.ST-DOC-0824"
   },
   {
-    id: 'abstract-04',
-    title: 'CAMOUFLAGE PILLS',
-    subtitle: 'COGNITIVE BLINDNESS ARRAY',
-    description: 'A mathematical combination of forest greens, deep navies, and pale yellow pill-cylinders. This graphic acts as a visual jammer designed to scram automatic classification algorithms and target tracking nodes.',
-    additionalInfo: [
-      'Renders facial-recognition scanners completely non-responsive in a 10-meter radius when worn as custom-printed gear.',
-      'Geometric flows trigger brief periods of pleasant aesthetic daydreaming in sentient observers.',
-      'Constructed strictly from interlocking pill grids and continuous sine-waves.'
+    "id": "roll-02",
+    "title": "Totally Wizard",
+    "subtitle": "KINETIC MOMENTUM PROPULSION",
+    "description": "",
+    "additionalInfo": [
+      "The subject demonstrates extreme propulsion thresholds to typical drag laws.",
+      "Features a signature magenta and lime chromatic offset signature.",
+      "Saturates surrounding graphic media with positive, high-intensity playful kinetic feedback."
     ],
-    image: 'src/assets/images/Project4.png',
-    medium: 'Screenprint & Dynamic Pattern Design',
-    date: '2023',
-    client: 'Inconspicuous Gear Corp.',
-    anomalyLevel: 'SAFE',
-    coordinates: 'Sub-Sector 12 / Grid C',
-    classificationCode: 'D.ST-GRID-1102'
+    "image": "src/assets/images/Project2.png",
+    "medium": "Risograph Vector Illustration",
+    "date": "2024",
+    "client": "Subway Shufflers Association",
+    "anomalyLevel": "SAFE",
+    "coordinates": "40.7128° N, 74.0060° W",
+    "classificationCode": "D.ST-KINET-5509"
   },
   {
-    id: 'pilot-05',
-    title: 'BONE TO BE WILD',
-    subtitle: 'DEPT. PHANTOM LEADER',
-    description: 'A vintage military flight commander skull fitted with custom aeronautic goggles that display real-time coordinates of nearby alternate realities and folding spatial gateways.',
-    additionalInfo: [
-      'Goggles emit a low click-hum when active.',
-      'Text emblazoned on collar collar triggers strong commands of adventure and rebellion in reader subjects.',
-      'Retained original vocal cords which occasionally recite radio transmissions from 1952.'
+    "id": "pilot-05",
+    "title": "BONE TO BE WILD",
+    "subtitle": "DEPT. PHANTOM LEADER",
+    "description": "",
+    "additionalInfo": [
+      "Goggles emit a low click-hum when active.",
+      "Text emblazoned on collar collar triggers strong commands of adventure and rebellion in reader subjects.",
+      "Retained original vocal cords which occasionally recite radio transmissions from 1952."
     ],
-    image: 'src/assets/images/Project5.png',
-    medium: 'Sumi Ink & Digital Screenprint Duo-Tone',
-    date: '2024',
-    client: '104th Phantom Squadron',
-    anomalyLevel: 'EUCLID',
-    coordinates: 'Point Nemo / Deep Pacific',
-    classificationCode: 'D.ST-AVI-8812'
+    "image": "src/assets/images/Project5.png",
+    "medium": "Sumi Ink & Digital Screenprint Duo-Tone",
+    "date": "2024",
+    "client": "104th Phantom Squadron",
+    "anomalyLevel": "EUCLID",
+    "coordinates": "Point Nemo / Deep Pacific",
+    "classificationCode": "D.ST-AVI-8812"
   },
   {
-    id: 'pencil-06',
-    title: 'THE CREATIVE BLOCK',
-    subtitle: 'KNOTTED SCULPTURAL TOOL',
-    description: 'An interactive sculptural concept showing a professional drawing pencil tied in a tight neat knot. A physical metaphor depicting severe mental roadblocks experienced during comic-strip outline workflows.',
-    additionalInfo: [
-      'The structural graphite core is unbroken despite being bent at a 180-degree radius.',
-      'When picked up, users experience an immediate, intense urge to organize files alphabetically.',
-      'Responds exceptionally well to classic rubber erasers.'
+    "id": "out-01",
+    "title": "Magic Fingers",
+    "subtitle": "COGNITIVE HAZARD OUTPOST",
+    "description": "",
+    "additionalInfo": [
+      "Visual frequency measured at exactly 540nm (Emerald green glow).",
+      "Exhibits sympathetic resonance with retro video synthesizers and low-fidelity audio recordings.",
+      "Recommended protocols: Contain in lead-lined dark frame; avoid direct eye-contact during periods of celestial alignment."
     ],
-    image: 'src/assets/images/Project6.png',
-    medium: '3D Concept Art & Graphic Poster',
-    date: '2025',
-    client: 'D.ST Creative Advisory',
-    anomalyLevel: 'SAFE',
-    coordinates: 'Desk Left Margin',
-    classificationCode: 'D.ST-TOOL-8819'
+    "image": "src/assets/images/Project1.png",
+    "medium": "Digital Comic Art & Screenprint",
+    "date": "2025",
+    "client": "The Dept. of Strange Things",
+    "anomalyLevel": "EUCLID",
+    "coordinates": "RA 18h 36m 56s | Dec +38° 47′ 1″",
+    "classificationCode": "D.ST-SKELE-1031",
+    "isMultiImage": false,
+    "images": [
+      "src/assets/images/Project1.png",
+      "src/assets/images/Project4.png",
+      "src/assets/images/Project6.png"
+    ]
   },
   {
-    id: 'rose-07',
-    title: 'THE GRAVE ROSE',
-    subtitle: 'ORGANIC TEMPORAL STYLING',
-    description: 'Traditional American tattooing flash experiment with stippling and dotwork separations. This blossom is locked inside a minor localized temporal buffer, preventing it from ever wilting or growing.',
-    additionalInfo: [
-      'Stippled inks consist of microscopic dark iron oxide which responds to localized electromagnetic waves.',
-      'Slightly warm to the touch (constant 31°C).',
-      'Releases a mild scent of fresh mountain pine and old comic papers.'
+    "id": "abstract-04",
+    "title": "Rock 'n' Rose",
+    "subtitle": "COGNITIVE BLINDNESS ARRAY",
+    "description": "",
+    "additionalInfo": [
+      "Renders facial-recognition scanners completely non-responsive in a 10-meter radius when worn as custom-printed gear.",
+      "Geometric flows trigger brief periods of pleasant aesthetic daydreaming in sentient observers.",
+      "Constructed strictly from interlocking pill grids and continuous sine-waves."
     ],
-    image: 'src/assets/images/Project7.png',
-    medium: 'American Traditional Ink & Dotwork',
-    date: '2024',
-    client: 'Iron & Petals Parlor',
-    anomalyLevel: 'SAFE',
-    coordinates: 'Section 4, Row B-Grave',
-    classificationCode: 'D.ST-ECO-0221'
+    "image": "src/assets/images/Project4.png",
+    "medium": "Screenprint & Dynamic Pattern Design",
+    "date": "2023",
+    "client": "Inconspicuous Gear Corp.",
+    "anomalyLevel": "SAFE",
+    "coordinates": "Sub-Sector 12 / Grid C",
+    "classificationCode": "D.ST-GRID-1102"
   },
   {
-    id: 'project-08',
-    title: 'THE FINAL DOSSIER',
-    subtitle: 'CLASSIFIED INVESTIGATION ASSET',
-    description: 'An illustrative study representing deep-field observational graphic studies. Discovered under security level clearance, it presents highly complex anomalous line geometries.',
-    additionalInfo: [
-      'Underwent thorough validation checks by the Senior Compiler.',
-      'Maintains pristine geometric properties regardless of medium rotation.'
+    "id": "pencil-06",
+    "title": "West Coast Dots",
+    "subtitle": "KNOTTED SCULPTURAL TOOL",
+    "description": "",
+    "additionalInfo": [
+      "The structural graphite core is unbroken despite being bent at a 180-degree radius.",
+      "When picked up, users experience an immediate, intense urge to organize files alphabetically.",
+      "Responds exceptionally well to classic rubber erasers."
     ],
-    image: 'src/assets/images/Project8.png',
-    medium: 'Digital Ink Poster',
-    date: '2025',
-    client: 'The Dept. of Strange Things',
-    anomalyLevel: 'SAFE',
-    coordinates: 'Sector 8-K Archive',
-    classificationCode: 'D.ST-DOC-0824'
+    "image": "src/assets/images/Project6.png",
+    "medium": "3D Concept Art & Graphic Poster",
+    "date": "2025",
+    "client": "D.ST Creative Advisory",
+    "anomalyLevel": "SAFE",
+    "coordinates": "Desk Left Margin",
+    "classificationCode": "D.ST-TOOL-8819"
   }
 ];
 
