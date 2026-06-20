@@ -26,9 +26,16 @@ const ProjectContext = createContext<ProjectContextType | undefined>(undefined);
 export function ProjectProvider({ children }: { children: React.ReactNode }) {
   const [projects, setProjects] = useState<StatefulProject[]>(() => {
     try {
-      const saved = localStorage.getItem('dost_projects_v2');
+      const saved = localStorage.getItem('dost_projects_v3');
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          return parsed.map((p) => ({
+            ...p,
+            isMultiImage: false,
+            images: undefined,
+          }));
+        }
       }
     } catch (e) {
       console.error('Error loading custom projects:', e);
@@ -44,6 +51,8 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
         ...proj,
         column,
         order,
+        isMultiImage: false,
+        images: undefined,
       };
     });
   });
@@ -51,7 +60,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
   // Save changes whenever state shifts
   useEffect(() => {
     try {
-      localStorage.setItem('dost_projects_v2', JSON.stringify(projects));
+      localStorage.setItem('dost_projects_v3', JSON.stringify(projects));
     } catch (e) {
       console.error('Error saving projects state:', e);
     }
