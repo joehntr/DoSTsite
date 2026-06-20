@@ -40,14 +40,10 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
       const column = lockData ? lockData.column : 1;
       const order = lockData ? lockData.order : 0;
 
-      const isMagicFingers = proj.title.toLowerCase().includes('magic fingers');
-
       return {
         ...proj,
         column,
         order,
-        isMultiImage: isMagicFingers ? true : undefined,
-        images: isMagicFingers ? [proj.image, 'src/assets/images/Project4.png', 'src/assets/images/Project6.png'] : undefined,
       };
     });
   });
@@ -66,23 +62,7 @@ export function ProjectProvider({ children }: { children: React.ReactNode }) {
     setProjects((prev) =>
       prev.map((p) => {
         if (p.id === id) {
-          const newProject = { ...p, ...updates };
-          // Auto detect naming shift to "Magic Fingers" to trigger multi-image default setup
-          if (
-            updates.title &&
-            updates.title.toLowerCase().includes('magic fingers') &&
-            (!p.title || !p.title.toLowerCase().includes('magic fingers'))
-          ) {
-            newProject.isMultiImage = true;
-            if (!newProject.images || newProject.images.length === 0) {
-              newProject.images = [
-                newProject.image,
-                'src/assets/images/Project4.png',
-                'src/assets/images/Project6.png'
-              ];
-            }
-          }
-          return newProject;
+          return { ...p, ...updates };
         }
         return p;
       })
