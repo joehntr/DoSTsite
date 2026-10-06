@@ -18,6 +18,7 @@ export default function IndexCard() {
     setCustomImages,
     handleDragEnd,
     handleUpdateStickerSetting,
+    handleDeleteSticker,
     setSelectedSticker,
     isMobile,
     isTablet
@@ -207,351 +208,280 @@ export default function IndexCard() {
   };
 
   return (
-    <div className="flex flex-col items-center mt-6 sm:mt-10 md:mt-14">
-      <section className="relative w-full max-w-5xl mx-auto px-4 pt-16 pb-36 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-4 overflow-visible">
+    <div className="flex flex-col items-center my-2 sm:my-4">
+      <section className="relative w-full max-w-sm sm:max-w-md mx-auto h-40 sm:h-44 flex items-center justify-center overflow-visible select-none">
         
-        {/* --- ALL STICKERS RENDERING AS DECOUPLED INDEPENDENT FLOATING PEERS --- */}
+        {/* --- ALL STICKERS CLUMPED IN THE MIDDLE AS INTERACTIVE PEERS --- */}
 
         {/* 1. Green Alien Head Sticker */}
-        <div className={`absolute top-[20px] left-[20px] md:top-[15px] md:left-1/2 md:-ml-[322px] select-none ${getZIndexClass(stickers.alien?.layer)}`}>
-          <Sticker
-            id="alien"
-            src={customImages.alien || ASSETS.stickerAlien}
-            alt="Green Alien Head Sticker"
-            rotation={getRotate(stickers.alien, -12)}
-            scale={getScale(stickers.alien, 1.0)}
-            width="w-14"
-            offsetX="0px"
-            offsetY="0px"
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('alien', e, info)}
-            onSelect={() => setSelectedSticker('alien')}
-            isSelected={selectedSticker === 'alien'}
-            style={{
-              ...getCoords(stickers.alien),
-              rotate: getRotate(stickers.alien, -12),
-              scale: getScale(stickers.alien, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.alien?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('alien', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('alien', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('alien', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, alien: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, alien: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 2. Creative Spiral Pencil Sticker */}
-        <div className={`absolute top-[10px] right-[-25px] left-auto md:top-[5px] md:left-1/2 md:-ml-[92px] md:right-auto select-none ${getZIndexClass(stickers.pencil?.layer)}`}>
-          <Sticker
-            id="pencil"
-            src={customImages.pencil || undefined}
-            alt="Coil Pencil Sticker"
-            rotation={getRotate(stickers.pencil, 15)}
-            scale={getScale(stickers.pencil, 1.0)}
-            offsetX="0px"
-            offsetY="0px"
-            customElement={customImages.pencil ? undefined : <CreativeSpiralPencil />}
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('pencil', e, info)}
-            onSelect={() => setSelectedSticker('pencil')}
-            isSelected={selectedSticker === 'pencil'}
-            style={{
-              ...getCoords(stickers.pencil),
-              rotate: getRotate(stickers.pencil, 15),
-              scale: getScale(stickers.pencil, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.pencil?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('pencil', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('pencil', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('pencil', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, pencil: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, pencil: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 3. Soda Can Walking Sticker */}
-        <div className={`absolute top-[290px] left-[15px] md:top-[290px] md:left-1/2 md:-ml-[382px] select-none ${getZIndexClass(stickers.can?.layer)}`}>
-          <Sticker
-            id="can"
-            src={customImages.can || undefined}
-            alt="Soda Can Walking Sticker"
-            rotation={getRotate(stickers.can, -18)}
-            scale={getScale(stickers.can, 1.0)}
-            offsetX="0px"
-            offsetY="0px"
-            customElement={customImages.can ? undefined : <OrangeCanCartoon />}
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('can', e, info)}
-            onSelect={() => setSelectedSticker('can')}
-            isSelected={selectedSticker === 'can'}
-            style={{
-              ...getCoords(stickers.can),
-              rotate: getRotate(stickers.can, -18),
-              scale: getScale(stickers.can, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.can?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('can', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('can', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('can', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, can: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, can: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 4. Classic Red Monster Ghost */}
-        <div className={`absolute top-[590px] left-1/2 -translate-x-1/2 md:top-[318px] md:left-1/2 md:ml-[223px] md:translate-x-0 select-none ${getZIndexClass(stickers.ghost?.layer)}`}>
-          <Sticker
-            id="ghost"
-            src={customImages.ghost || undefined}
-            alt="Classic Red Monster Ghost"
-            rotation={getRotate(stickers.ghost, 14)}
-            scale={getScale(stickers.ghost, 1.0)}
-            offsetX="0px"
-            offsetY="0px"
-            customElement={customImages.ghost ? undefined : <HandBuiltGhost />}
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('ghost', e, info)}
-            onSelect={() => setSelectedSticker('ghost')}
-            isSelected={selectedSticker === 'ghost'}
-            style={{
-              ...getCoords(stickers.ghost),
-              rotate: getRotate(stickers.ghost, 14),
-              scale: getScale(stickers.ghost, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.ghost?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('ghost', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('ghost', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('ghost', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, ghost: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, ghost: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 5. Zombie Skeleton Hand Sticker */}
-        <div className={`absolute top-[415px] left-1/2 -translate-x-1/2 md:top-[25px] md:left-1/2 md:ml-[198px] md:translate-x-0 select-none ${getZIndexClass(stickers.zombie?.layer)}`}>
-          <Sticker
-            id="zombie"
-            src={customImages.zombie || undefined}
-            alt="Zombie Approved Sticker"
-            rotation={getRotate(stickers.zombie, 22)}
-            scale={getScale(stickers.zombie, 1.0)}
-            offsetX="0px"
-            offsetY="0px"
-            customElement={customImages.zombie ? undefined : <HandBuiltZombieArm />}
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('zombie', e, info)}
-            onSelect={() => setSelectedSticker('zombie')}
-            isSelected={selectedSticker === 'zombie'}
-            style={{
-              ...getCoords(stickers.zombie),
-              rotate: getRotate(stickers.zombie, 22),
-              scale: getScale(stickers.zombie, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.zombie?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('zombie', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('zombie', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('zombie', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, zombie: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, zombie: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 6. Dead Inside Circle Sticker */}
-        <div className={`absolute top-[240px] left-[70%] -translate-x-1/2 md:top-[280px] md:left-1/2 md:ml-[23px] md:translate-x-0 select-none ${getZIndexClass(stickers.deadInside?.layer)}`}>
-          <Sticker
-            id="deadInside"
-            src={customImages.deadInside || undefined}
-            alt="Dead Inside Circle Sticker"
-            rotation={getRotate(stickers.deadInside, -10)}
-            scale={getScale(stickers.deadInside, 1.0)}
-            offsetX="0px"
-            offsetY="0px"
-            customElement={customImages.deadInside ? undefined : <JaggedDeadInside />}
-            draggable={isMoveMode}
-            onDragEnd={(e, info) => handleDragEnd('deadInside', e, info)}
-            onSelect={() => setSelectedSticker('deadInside')}
-            isSelected={selectedSticker === 'deadInside'}
-            style={{
-              ...getCoords(stickers.deadInside),
-              rotate: getRotate(stickers.deadInside, -10),
-              scale: getScale(stickers.deadInside, 1.0)
-            }}
-            isMoveMode={isMoveMode}
-            layer={stickers.deadInside?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('deadInside', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('deadInside', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('deadInside', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, deadInside: null };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, deadInside: base64 };
-                try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
-                return updated;
-              });
-            }}
-          />
-        </div>
-
-        {/* 4. THE MAIN DEPT OF STRANGE THINGS BLUE-LINED INDEX CARD */}
-        <motion.div
-           initial={{ opacity: 0, y: 30, rotate: -2 }}
-           animate={{ opacity: 1, y: 0, rotate: -2 }}
-           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-           className="relative w-full max-w-md bg-white rounded-md p-6 sm:p-8 hover:rotate-0 transition-all duration-300 z-10 select-none shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-stone-100"
-        >
-          {/* Left vertical red line for margin paper style */}
-          <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-rose-400 opacity-80" />
-
-          {/* Eye stamp logo on top-left of the index card */}
-          <div className="absolute left-[64px] sm:left-[72px] top-5 select-none opacity-85 flex items-center justify-center rotate-[-12deg]">
-            <img
-              src={ASSETS.logoBadge}
-              alt="Stamp Logo"
-              className="w-12 h-12 object-contain mix-blend-multiply"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          {/* Lined paper texture writing area - using realistic background repeat of lines */}
-          <div 
-            className="pl-10 mt-12 pr-4 font-typewriter text-zinc-800 tracking-tight text-sm sm:text-base selection:bg-rose-100"
-            style={{
-              backgroundImage: 'linear-gradient(rgba(14, 165, 233, 0.12) 1px, transparent 1px)',
-              backgroundSize: '100% 2rem',
-              lineHeight: '2rem',
-              minHeight: '8rem'
-            }}
-          >
-            <p className="text-left leading-[2rem] font-medium" style={{ fontFamily: "'Courier New', Courier, monospace" }}>
-              <span className="font-bold">The Department of Strange Things</span> is a fictional government agency that <span className="italic">investigates, identifies</span> and <span className="italic">contains</span> <span className="font-bold">anomalies, entities</span> and <span className="font-bold">creatures</span>.
-            </p>
-          </div>
-        </motion.div>
-
-        {/* 5. PORTFOLIO STICKY NOTE (Yellow notes, overlaps from right bottom, sits model-perfect lower) */}
-        <motion.div
-           initial={{ opacity: 0, scale: 0.9, rotate: 6 }}
-           animate={{ opacity: 1, scale: 1, rotate: 5 }}
-           transition={{ type: 'spring', stiffness: 180, damping: 15, delay: 0.1 }}
-           className="relative w-64 h-56 -mt-2 md:-ml-12 md:translate-y-28 md:rotate-[6deg] hover:rotate-[3deg] transition-all duration-300 z-20 select-none custom-shadow-sticker"
-        >
-          <div
-            className="w-full h-full bg-[#fbf5be] p-6 flex flex-col justify-between overflow-hidden"
-            style={{
-              clipPath: 'polygon(0% 0%, 100% 0%, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0% 100%)'
-            }}
-          >
-            {/* Subtle tactile speckles & grease/pencil marks (coffee ring removed) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
-              {/* Soft pencil sketch stroke */}
-              <path 
-                d="M 185 35 Q 192 33, 198 48" 
-                fill="none" 
-                stroke="#000000" 
-                strokeWidth="1" 
-                className="opacity-40"
-              />
-              {/* Stray paper fibers / speckles */}
-              <circle cx="130" cy="120" r="1" fill="#5c4033" className="opacity-70" />
-              <circle cx="38" cy="160" r="1.5" fill="#5c4033" className="opacity-45" />
-              <circle cx="210" cy="140" r="0.8" fill="#5c4033" className="opacity-60" />
-            </svg>
-
-            {/* Faint fold paper creases */}
-            <div className="absolute top-[35%] left-0 right-0 h-px bg-stone-900/[0.03] pointer-events-none" />
-            <div className="absolute top-[70%] left-0 right-0 h-px bg-stone-900/[0.03] pointer-events-none" />
-
-            {/* Folded Edge Corner itself (no drop shadow underneath it) */}
-            <div 
-              className="absolute bottom-0 right-0 w-6 h-6 bg-gradient-to-br from-[#dfd68a] to-[#ebe3a4] border-t border-l border-white/20 pointer-events-none z-20"
-              style={{ 
-                clipPath: 'polygon(0 0, 100% 0, 0 100%)'
+        {!stickers.alien?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.alien?.layer)}`}>
+            <Sticker
+              id="alien"
+              src={customImages.alien || ASSETS.stickerAlien}
+              alt="Green Alien Head Sticker"
+              rotation={getRotate(stickers.alien, -12)}
+              scale={getScale(stickers.alien, 1.0)}
+              width="w-14"
+              offsetX="0px"
+              offsetY="0px"
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('alien', e, info)}
+              onSelect={() => setSelectedSticker('alien')}
+              isSelected={selectedSticker === 'alien'}
+              style={{
+                ...getCoords(stickers.alien),
+                rotate: getRotate(stickers.alien, -12),
+                scale: getScale(stickers.alien, 1.0)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.alien?.layer || 'middle'}
+              onLayerChange={(l) => handleUpdateStickerSetting('alien', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('alien', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('alien', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('alien')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, alien: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, alien: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
               }}
             />
-
-            <div className="flex-1 flex flex-col justify-center w-full relative z-10">
-              <div className="text-zinc-900 font-handmade text-[28px] sm:text-[32px] leading-[1.15] text-center">
-                <div>it's also</div>
-                <div>my portfolio</div>
-              </div>
-              <div className="text-zinc-900 font-handmade text-[24px] sm:text-[28px] text-right pr-4 mt-3">
-                - Joe
-              </div>
-            </div>
           </div>
-        </motion.div>
+        )}
+
+        {/* 2. Creative Spiral Pencil Sticker */}
+        {!stickers.pencil?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.pencil?.layer)}`}>
+            <Sticker
+              id="pencil"
+              src={customImages.pencil || undefined}
+              alt="Coil Pencil Sticker"
+              rotation={getRotate(stickers.pencil, 18)}
+              scale={getScale(stickers.pencil, 1.05)}
+              offsetX="0px"
+              offsetY="0px"
+              customElement={customImages.pencil ? undefined : <CreativeSpiralPencil />}
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('pencil', e, info)}
+              onSelect={() => setSelectedSticker('pencil')}
+              isSelected={selectedSticker === 'pencil'}
+              style={{
+                ...getCoords(stickers.pencil),
+                rotate: getRotate(stickers.pencil, 18),
+                scale: getScale(stickers.pencil, 1.05)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.pencil?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('pencil', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('pencil', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('pencil', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('pencil')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, pencil: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, pencil: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
+
+        {/* 3. Soda Can Walking Sticker */}
+        {!stickers.can?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.can?.layer)}`}>
+            <Sticker
+              id="can"
+              src={customImages.can || undefined}
+              alt="Soda Can Walking Sticker"
+              rotation={getRotate(stickers.can, -15)}
+              scale={getScale(stickers.can, 1.1)}
+              offsetX="0px"
+              offsetY="0px"
+              customElement={customImages.can ? undefined : <OrangeCanCartoon />}
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('can', e, info)}
+              onSelect={() => setSelectedSticker('can')}
+              isSelected={selectedSticker === 'can'}
+              style={{
+                ...getCoords(stickers.can),
+                rotate: getRotate(stickers.can, -15),
+                scale: getScale(stickers.can, 1.1)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.can?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('can', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('can', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('can', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('can')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, can: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, can: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
+
+        {/* 4. Classic Red Monster Ghost */}
+        {!stickers.ghost?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.ghost?.layer)}`}>
+            <Sticker
+              id="ghost"
+              src={customImages.ghost || undefined}
+              alt="Classic Red Monster Ghost"
+              rotation={getRotate(stickers.ghost, 12)}
+              scale={getScale(stickers.ghost, 1.0)}
+              offsetX="0px"
+              offsetY="0px"
+              customElement={customImages.ghost ? undefined : <HandBuiltGhost />}
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('ghost', e, info)}
+              onSelect={() => setSelectedSticker('ghost')}
+              isSelected={selectedSticker === 'ghost'}
+              style={{
+                ...getCoords(stickers.ghost),
+                rotate: getRotate(stickers.ghost, 12),
+                scale: getScale(stickers.ghost, 1.0)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.ghost?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('ghost', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('ghost', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('ghost', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('ghost')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, ghost: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, ghost: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
+
+        {/* 5. Zombie Skeleton Hand Sticker */}
+        {!stickers.zombie?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.zombie?.layer)}`}>
+            <Sticker
+              id="zombie"
+              src={customImages.zombie || undefined}
+              alt="Zombie Approved Sticker"
+              rotation={getRotate(stickers.zombie, 6)}
+              scale={getScale(stickers.zombie, 1.0)}
+              offsetX="0px"
+              offsetY="0px"
+              customElement={customImages.zombie ? undefined : <HandBuiltZombieArm />}
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('zombie', e, info)}
+              onSelect={() => setSelectedSticker('zombie')}
+              isSelected={selectedSticker === 'zombie'}
+              style={{
+                ...getCoords(stickers.zombie),
+                rotate: getRotate(stickers.zombie, 6),
+                scale: getScale(stickers.zombie, 1.0)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.zombie?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('zombie', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('zombie', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('zombie', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('zombie')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, zombie: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, zombie: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
+
+        {/* 6. Dead Inside Circle Sticker */}
+        {!stickers.deadInside?.deleted && (
+          <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none ${getZIndexClass(stickers.deadInside?.layer)}`}>
+            <Sticker
+              id="deadInside"
+              src={customImages.deadInside || undefined}
+              alt="Dead Inside Circle Sticker"
+              rotation={getRotate(stickers.deadInside, -6)}
+              scale={getScale(stickers.deadInside, 1.05)}
+              offsetX="0px"
+              offsetY="0px"
+              customElement={customImages.deadInside ? undefined : <JaggedDeadInside />}
+              draggable={isMoveMode}
+              onDragEnd={(e, info) => handleDragEnd('deadInside', e, info)}
+              onSelect={() => setSelectedSticker('deadInside')}
+              isSelected={selectedSticker === 'deadInside'}
+              style={{
+                ...getCoords(stickers.deadInside),
+                rotate: getRotate(stickers.deadInside, -6),
+                scale: getScale(stickers.deadInside, 1.05)
+              }}
+              isMoveMode={isMoveMode}
+              layer={stickers.deadInside?.layer || 'back'}
+              onLayerChange={(l) => handleUpdateStickerSetting('deadInside', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('deadInside', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('deadInside', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('deadInside')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, deadInside: null };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, deadInside: base64 };
+                  try { localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated)); } catch(e){}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
 
       </section>
     </div>

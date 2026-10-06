@@ -30,6 +30,7 @@ interface StickerProps {
   onUploadImage?: (base64: string) => void;
   layer?: 'front' | 'middle' | 'back';
   onLayerChange?: (layer: 'front' | 'middle' | 'back') => void;
+  onDelete?: () => void;
 }
 
 export default function Sticker({
@@ -54,7 +55,8 @@ export default function Sticker({
   onResetImage,
   onUploadImage,
   layer = 'front',
-  onLayerChange
+  onLayerChange,
+  onDelete
 }: StickerProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isMobile, isTablet } = useStickers();
@@ -261,7 +263,38 @@ export default function Sticker({
               🥞 {layer === 'front' ? 'FRONT' : layer === 'middle' ? 'MID' : 'BACK'}
             </button>
           )}
+
+          {/* Delete sticker button */}
+          {onDelete && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete();
+              }}
+              className="text-[9px] bg-red-600 hover:bg-red-700 text-white font-bold px-1.5 py-0.5 rounded font-mono transition-all active:scale-95 cursor-pointer leading-tight flex items-center gap-0.5"
+              title="Delete this sticker"
+            >
+              🗑️ DEL
+            </button>
+          )}
         </div>
+      )}
+
+      {/* Quick corner delete badge button */}
+      {isMoveMode && isSelected && onDelete && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete();
+          }}
+          className="absolute -top-2.5 -right-2.5 w-5 h-5 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center font-black text-[10px] leading-none shadow-md border-2 border-white z-60 cursor-pointer transition-transform hover:scale-115 active:scale-90 pointer-events-auto"
+          title="Delete sticker"
+          aria-label="Delete sticker"
+        >
+          ✕
+        </button>
       )}
 
       {/* Main visual body (Pure transparent layers, no bounding square white boxes) */}

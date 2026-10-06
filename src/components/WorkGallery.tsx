@@ -65,9 +65,9 @@ export default function WorkGallery() {
   };
 
   return (
-    <section id="work" className="max-w-6xl mx-auto px-4 py-16">
+    <section id="work" className="max-w-6xl mx-auto px-4 pt-4 pb-16">
       {/* Title */}
-      <div className="text-center mb-10 select-none">
+      <div className="text-center mb-6 select-none">
         <h2 className="font-sans font-black text-xl tracking-[0.18em] uppercase leading-snug text-neutral-900 inline-block">
           WORK
         </h2>

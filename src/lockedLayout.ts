@@ -15,56 +15,64 @@
 
 export const LOCKED_STICKERS = {
   "alien": {
-    "x": 118.55078125,
-    "y": 8.59765625,
+    "x": -75,
+    "y": -32,
     "scale": 1,
-    "rotate": 0,
-    "layer": "front",
-    "mobileX": 230.61328125,
-    "mobileY": -8.03125
+    "rotate": -12,
+    "layer": "middle" as const,
+    "mobileX": -60,
+    "mobileY": -26,
+    "mobileScale": 0.85
   },
   "pencil": {
-    "x": 407.4609375,
-    "y": 98.51171875,
-    "scale": 1.1,
-    "rotate": -15,
-    "layer": "back"
+    "x": 65,
+    "y": -35,
+    "scale": 1.05,
+    "rotate": 18,
+    "layer": "front" as const,
+    "mobileX": 50,
+    "mobileY": -30,
+    "mobileScale": 0.85
   },
   "can": {
-    "x": -20.609375,
-    "y": -131.41796875,
-    "scale": 1.5,
-    "rotate": -18,
-    "layer": "front",
-    "mobileX": -34,
-    "mobileY": -67.52734375
+    "x": -85,
+    "y": 20,
+    "scale": 1.1,
+    "rotate": -15,
+    "layer": "front" as const,
+    "mobileX": -65,
+    "mobileY": 18,
+    "mobileScale": 0.9
   },
   "ghost": {
-    "x": -270.40625,
-    "y": 12.140625,
-    "scale": 0.8,
-    "rotate": 0,
-    "layer": "front",
-    "mobileX": -60.9765625,
-    "mobileY": 7.66796875
+    "x": 75,
+    "y": 25,
+    "scale": 1,
+    "rotate": 12,
+    "layer": "front" as const,
+    "mobileX": 60,
+    "mobileY": 20,
+    "mobileScale": 0.85
   },
   "zombie": {
-    "x": -175.62890625,
-    "y": 355.08203125,
+    "x": -5,
+    "y": 45,
     "scale": 1,
-    "rotate": -10,
-    "layer": "front",
-    "mobileX": 5.9765625,
-    "mobileY": 221.98046875
+    "rotate": 6,
+    "layer": "front" as const,
+    "mobileX": -5,
+    "mobileY": 38,
+    "mobileScale": 0.85
   },
   "deadInside": {
-    "x": 64.296875,
-    "y": -226.265625,
-    "scale": 1,
-    "rotate": -10,
-    "layer": "back",
-    "mobileX": 22.8125,
-    "mobileY": 86.51953125
+    "x": -5,
+    "y": -10,
+    "scale": 1.05,
+    "rotate": -6,
+    "layer": "back" as const,
+    "mobileX": -5,
+    "mobileY": -10,
+    "mobileScale": 0.9
   },
   "aboutAvatar": {
     "x": 77.3203125,

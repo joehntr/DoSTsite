@@ -3,21 +3,18 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ASSETS } from './data';
 import IndexCard from './components/IndexCard';
 import WorkGallery from './components/WorkGallery';
 import AboutFolders from './components/AboutFolders';
 import ContactSection from './components/ContactSection';
-import ShopComingSoon from './components/ShopComingSoon';
 import { StickerProvider } from './context/StickerContext';
 import { ProjectProvider } from './context/ProjectContext';
 import FloatingStickerControl from './components/FloatingStickerControl';
 import FloatingIllustrationControl from './components/FloatingIllustrationControl';
 
 export default function App() {
-  const [isShopOpen, setIsShopOpen] = useState(false);
-
   // Smooth scroll handler
   const handleScrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -32,9 +29,9 @@ export default function App() {
         <div className="min-h-screen bg-[#fbfbf9] text-stone-900 selection:bg-rose-500 selection:text-white font-sans overflow-x-hidden relative flex flex-col justify-between">
         
         {/* 1. BRAND HEADER SECTION */}
-      <header className="pt-10 pb-4 px-4 flex flex-col items-center select-none text-center">
+      <header className="pt-6 pb-2 px-4 flex flex-col items-center select-none text-center">
         {/* Heraldic Shield Crest Logo */}
-        <div className="mb-3 hover:scale-105 transition-transform duration-300">
+        <div className="mb-2 hover:scale-105 transition-transform duration-300">
           <img
             src={ASSETS.logo}
             alt="The Department of Strange Things Official Logo"
@@ -50,7 +47,7 @@ export default function App() {
         </h1>
 
         {/* Navigation Menu */}
-        <nav className="mt-8 flex items-center justify-center gap-6 text-xs font-mono font-black tracking-wider uppercase text-zinc-950">
+        <nav className="mt-5 flex items-center justify-center gap-6 text-xs font-mono font-black tracking-wider uppercase text-zinc-950">
           <button
             onClick={() => handleScrollTo('work')}
             className="hover:text-rose-600 transition-colors cursor-pointer"
@@ -74,20 +71,6 @@ export default function App() {
           >
             CONTACT
           </button>
-
-          {/* Styled Border Shop Button (Disabled & Stamp Added) */}
-          <div className="relative">
-            <button
-              disabled
-              className="px-4 py-1.5 rounded bg-stone-200 text-stone-400 border border-stone-300 font-mono font-black select-none cursor-not-allowed opacity-80"
-              id="nav_shop_btn"
-            >
-              SHOP
-            </button>
-            <div className="absolute -top-3 -right-3 px-1 py-0.5 bg-white border-2 border-red-600 text-red-600 font-sans font-black text-[7px] uppercase tracking-widest rounded rotate-12 shadow-[2px_2px_0_0_rgba(220,38,38,0.2)] select-none pointer-events-none">
-              COMING SOON
-            </div>
-          </div>
         </nav>
       </header>
 
@@ -150,10 +133,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* 4. DRAWER SHOP COMPONENT */}
-      <ShopComingSoon isOpen={isShopOpen} onClose={() => setIsShopOpen(false)} />
-
-      {/* 5. CONDITIONALLY RENDER STUDIOS ONLY IN DEVELOPER SITES OR WITH ?studio=true */}
+      {/* CONDITIONALLY RENDER STUDIOS ONLY IN DEVELOPER SITES OR WITH ?studio=true */}
       {(() => {
         const showStudios = typeof window !== 'undefined' && (
           new URLSearchParams(window.location.search).get('studio') === 'true' ||

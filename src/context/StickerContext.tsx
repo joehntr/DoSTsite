@@ -12,6 +12,7 @@ export interface StickerState {
   scale: number;
   rotate: number;
   layer?: 'front' | 'middle' | 'back';
+  deleted?: boolean;
   mobileX?: number;
   mobileY?: number;
   tabletX?: number;
@@ -31,8 +32,11 @@ interface StickerContextType {
   customImages: { [key: string]: string | null };
   setCustomImages: React.Dispatch<React.SetStateAction<{ [key: string]: string | null }>>;
   handleDragEnd: (key: string, event: any, info: any) => void;
-  handleUpdateStickerSetting: (key: string, field: 'scale' | 'rotate' | 'layer', value: any) => void;
+  handleUpdateStickerSetting: (key: string, field: 'scale' | 'rotate' | 'layer' | 'deleted', value: any) => void;
   handleNudgeSticker: (key: string, direction: 'left' | 'right' | 'up' | 'down', amount?: number) => void;
+  handleDeleteSticker: (key: string) => void;
+  handleRestoreSticker: (key: string) => void;
+  handleRestoreAllStickers: () => void;
   handleResetBoard: () => void;
   stickerNames: { [key: string]: string };
   isMobile: boolean;
@@ -75,23 +79,12 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
   // Unified configurations representing offsets, scale multipliers and custom rotations
   const [stickers, setStickers] = useState<{ [key: string]: StickerState }>(() => {
     try {
-      const saved = localStorage.getItem('dost_stickers_v7');
+      const saved = localStorage.getItem('dost_stickers_v8');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (!parsed.aboutDesign) {
           parsed.aboutDesign = { x: 0, y: 0, scale: 1.0, rotate: 45, layer: 'front' };
         }
-        return parsed;
-      }
-      const savedV6 = localStorage.getItem('dost_stickers_v6');
-      if (savedV6) {
-        const parsed = JSON.parse(savedV6);
-        if (!parsed.aboutDesign) {
-          parsed.aboutDesign = { x: 0, y: 0, scale: 1.0, rotate: 45, layer: 'front' };
-        }
-        try {
-          localStorage.setItem('dost_stickers_v7', JSON.stringify(parsed));
-        } catch (e) {}
         return parsed;
       }
     } catch (e) {
@@ -172,7 +165,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
           }
         };
       }
-      localStorage.setItem('dost_stickers_v7', JSON.stringify(updated));
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
       return updated;
     });
   };
@@ -212,7 +205,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
           ...updatedFields
         }
       };
-      localStorage.setItem('dost_stickers_v7', JSON.stringify(updated));
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
       return updated;
     });
   };
@@ -264,7 +257,51 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
           }
         };
       }
-      localStorage.setItem('dost_stickers_v7', JSON.stringify(updated));
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleDeleteSticker = (key: string) => {
+    setStickers(prev => {
+      const current = prev[key] || { x: 0, y: 0, scale: 1.0, rotate: 0, layer: 'front' };
+      const updated = {
+        ...prev,
+        [key]: {
+          ...current,
+          deleted: true
+        }
+      };
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleRestoreSticker = (key: string) => {
+    setStickers(prev => {
+      const current = prev[key] || { x: 0, y: 0, scale: 1.0, rotate: 0, layer: 'front' };
+      const updated = {
+        ...prev,
+        [key]: {
+          ...current,
+          deleted: false
+        }
+      };
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const handleRestoreAllStickers = () => {
+    setStickers(prev => {
+      const updated: { [key: string]: StickerState } = {};
+      Object.keys(prev).forEach(k => {
+        updated[k] = {
+          ...prev[k],
+          deleted: false
+        };
+      });
+      localStorage.setItem('dost_stickers_v8', JSON.stringify(updated));
       return updated;
     });
   };
@@ -305,7 +342,7 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
     setStickers(targetSettings);
     setCustomImages(targetImages);
     setSelectedSticker('alien');
-    localStorage.setItem('dost_stickers_v7', JSON.stringify(targetSettings));
+    localStorage.setItem('dost_stickers_v8', JSON.stringify(targetSettings));
     localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(targetImages));
   };
 
@@ -321,6 +358,9 @@ export function StickerProvider({ children }: { children: React.ReactNode }) {
       handleDragEnd,
       handleUpdateStickerSetting,
       handleNudgeSticker,
+      handleDeleteSticker,
+      handleRestoreSticker,
+      handleRestoreAllStickers,
       handleResetBoard,
       stickerNames,
       isMobile,

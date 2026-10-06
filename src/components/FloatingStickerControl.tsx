@@ -7,7 +7,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useStickers } from '../context/StickerContext';
 import { useProjects } from '../context/ProjectContext';
-import { Settings, X, Lock, Unlock, RefreshCw, Layers, Shield, Image as ImageIcon, Sparkles, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Move, Copy, FileCode } from 'lucide-react';
+import { Settings, X, Lock, Unlock, RefreshCw, Layers, Shield, Image as ImageIcon, Sparkles, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Move, Copy, FileCode, Trash2, Eye, RotateCcw } from 'lucide-react';
 
 // Read all files inside assets/images using Vite's import.meta.glob
 const imageModules = (import.meta as any).glob('/src/assets/images/*', { eager: true });
@@ -51,6 +51,9 @@ export default function FloatingStickerControl() {
     setCustomImages,
     handleUpdateStickerSetting,
     handleNudgeSticker,
+    handleDeleteSticker,
+    handleRestoreSticker,
+    handleRestoreAllStickers,
     handleResetBoard,
     stickerNames,
     handleSaveBoardAsDefault,
@@ -299,6 +302,25 @@ export const LOCKED_PROJECT_MAPPING = ${cleanProjectsMapping};
                 </div>
               ) : (
                 <>
+                  {/* Deleted stickers restore summary banner */}
+                  {Object.values(stickers).some((s: any) => s?.deleted) && (
+                    <div className="flex items-center justify-between p-2 bg-rose-50 border border-rose-200 rounded text-xs animate-fade-in">
+                      <div className="flex items-center gap-1.5 text-rose-800 font-bold text-[10px]">
+                        <Trash2 size={13} className="text-rose-600 shrink-0" />
+                        <span>{Object.values(stickers).filter((s: any) => s?.deleted).length} sticker(s) currently deleted</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleRestoreAllStickers}
+                        className="px-2 py-0.5 bg-rose-600 hover:bg-rose-700 text-white rounded text-[9px] font-black uppercase transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                        title="Restore all deleted stickers"
+                      >
+                        <RotateCcw size={10} />
+                        Restore All
+                      </button>
+                    </div>
+                  )}
+
                   {/* Select Sticker Step */}
                   <div className="space-y-1.5">
                     <span className="text-[10px] uppercase font-extrabold text-stone-400 tracking-wider flex items-center gap-1">
@@ -309,17 +331,46 @@ export const LOCKED_PROJECT_MAPPING = ${cleanProjectsMapping};
                       onChange={(e) => setSelectedSticker(e.target.value)}
                       className="w-full text-xs font-mono font-bold py-1.5 px-2.5 bg-white border-2 border-stone-900 rounded shadow-sm focus:outline-none focus:ring-1 focus:ring-rose-500"
                     >
-                      <optgroup label="BOARD STICKERS (INDEX CARD)">
+                      <optgroup label="BOARD STICKERS (HERO CLUMP)">
                         {boardStickers.map(key => (
-                          <option key={key} value={key}>{stickerNames[key] || key}</option>
+                          <option key={key} value={key}>
+                            {stickers[key]?.deleted ? `🗑️ ${stickerNames[key] || key} [DELETED]` : stickerNames[key] || key}
+                          </option>
                         ))}
                       </optgroup>
                       <optgroup label="ABOUT SEC. STICKERS (DOSSIER)">
                         {aboutStickers.map(key => (
-                          <option key={key} value={key}>{stickerNames[key] || key}</option>
+                          <option key={key} value={key}>
+                            {stickers[key]?.deleted ? `🗑️ ${stickerNames[key] || key} [DELETED]` : stickerNames[key] || key}
+                          </option>
                         ))}
                       </optgroup>
                     </select>
+                  </div>
+
+                  {/* Delete / Restore Sticker Toggle Action */}
+                  <div className="pt-0.5">
+                    {selectedStickerObj.deleted ? (
+                      <button
+                        type="button"
+                        onClick={() => handleRestoreSticker(selectedSticker)}
+                        className="w-full py-2 px-3 bg-emerald-500 hover:bg-emerald-600 text-white border-2 border-stone-900 rounded font-black text-xs uppercase flex items-center justify-center gap-2 shadow-[2px_2px_0_0_rgba(28,25,23,1)] transition-transform active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+                        title="Restore this sticker so it shows up on the page again"
+                      >
+                        <Eye size={14} />
+                        <span>RESTORE THIS STICKER</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteSticker(selectedSticker)}
+                        className="w-full py-2 px-3 bg-rose-50 hover:bg-rose-100 text-rose-700 hover:text-rose-800 border-2 border-rose-300 hover:border-rose-400 rounded font-black text-xs uppercase flex items-center justify-center gap-2 shadow-sm transition-transform active:translate-x-[1px] active:translate-y-[1px] cursor-pointer"
+                        title="Delete this sticker from the page"
+                      >
+                        <Trash2 size={14} />
+                        <span>DELETE THIS STICKER</span>
+                      </button>
+                    )}
                   </div>
 
                   {/* Actions Area */}
@@ -328,6 +379,11 @@ export const LOCKED_PROJECT_MAPPING = ${cleanProjectsMapping};
                     <div className="flex items-center justify-between border-b border-stone-100 pb-1 font-mono">
                       <span className="text-[10px] font-bold text-stone-800 uppercase tracking-tight">
                         2. EDIT: <span className="text-rose-500">{stickerNames[selectedSticker]?.split(' ')[0] || selectedSticker}</span>
+                        {selectedStickerObj.deleted && (
+                          <span className="ml-1.5 text-[8px] bg-rose-100 text-rose-700 font-mono px-1 py-0.2 rounded font-black">
+                            HIDDEN
+                          </span>
+                        )}
                       </span>
 
                       {/* Photo selector */}

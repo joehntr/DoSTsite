@@ -25,6 +25,7 @@ export default function AboutFolders() {
     setCustomImages,
     handleDragEnd,
     handleUpdateStickerSetting,
+    handleDeleteSticker,
     setSelectedSticker,
     isMobile,
     isTablet
@@ -162,136 +163,145 @@ export default function AboutFolders() {
         {/* --- STICKERS PLACED AROUND THE FOLDERS --- */}
 
         {/* 1. Yellow & Black pencil on Left next to Blue Folder */}
-        <div className={`absolute left-1/2 -ml-[135px] md:-ml-[230px] top-3 select-none ${getZIndexClass(stickers.aboutDesign?.layer)}`}>
-          <Sticker
-            id="aboutDesign"
-            alt="Design Tag Sticker"
-            rotation={getRotate(stickers.aboutDesign, 45)}
-            scale={getScale(stickers.aboutDesign, 1.0)}
-            draggable={isMoveMode}
-            isMoveMode={isMoveMode}
-            onSelect={() => setSelectedSticker('aboutDesign')}
-            isSelected={selectedSticker === 'aboutDesign'}
-            onDragEnd={(e, info) => handleDragEnd('aboutDesign', e, info)}
-            customElement={customImages.aboutDesign ? undefined : <DesignTagSticker />}
-            src={customImages.aboutDesign || undefined}
-            style={{
-              ...getCoords(stickers.aboutDesign),
-              rotate: getRotate(stickers.aboutDesign, 45),
-              scale: getScale(stickers.aboutDesign, 1.0)
-            }}
-            layer={stickers.aboutDesign?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('aboutDesign', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('aboutDesign', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('aboutDesign', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutDesign: null };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64Str) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutDesign: base64Str };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-          />
-        </div>
+        {!stickers.aboutDesign?.deleted && (
+          <div className={`absolute left-1/2 -ml-[135px] md:-ml-[230px] top-3 select-none ${getZIndexClass(stickers.aboutDesign?.layer)}`}>
+            <Sticker
+              id="aboutDesign"
+              alt="Design Tag Sticker"
+              rotation={getRotate(stickers.aboutDesign, 45)}
+              scale={getScale(stickers.aboutDesign, 1.0)}
+              draggable={isMoveMode}
+              isMoveMode={isMoveMode}
+              onSelect={() => setSelectedSticker('aboutDesign')}
+              isSelected={selectedSticker === 'aboutDesign'}
+              onDragEnd={(e, info) => handleDragEnd('aboutDesign', e, info)}
+              customElement={customImages.aboutDesign ? undefined : <DesignTagSticker />}
+              src={customImages.aboutDesign || undefined}
+              style={{
+                ...getCoords(stickers.aboutDesign),
+                rotate: getRotate(stickers.aboutDesign, 45),
+                scale: getScale(stickers.aboutDesign, 1.0)
+              }}
+              layer={stickers.aboutDesign?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('aboutDesign', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('aboutDesign', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('aboutDesign', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('aboutDesign')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutDesign: null };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64Str) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutDesign: base64Str };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
 
         {/* 2. Joseph Hunter's Comic Face Avatar badge on Yellow Folder */}
-        <div className={`absolute left-1/2 ml-[65px] md:ml-[115px] top-[10px] select-none ${getZIndexClass(stickers.aboutAvatar?.layer)}`}>
-          <Sticker
-            id="aboutAvatar"
-            src={customImages.aboutAvatar || ASSETS.stickerAvatar}
-            alt="Joseph Hunter Avatar Badge"
-            rotation={getRotate(stickers.aboutAvatar, 10)}
-            scale={getScale(stickers.aboutAvatar, 1.0)}
-            width="w-14 sm:w-16"
-            draggable={isMoveMode}
-            isMoveMode={isMoveMode}
-            onSelect={() => setSelectedSticker('aboutAvatar')}
-            isSelected={selectedSticker === 'aboutAvatar'}
-            onDragEnd={(e, info) => handleDragEnd('aboutAvatar', e, info)}
-            style={{
-              ...getCoords(stickers.aboutAvatar),
-              rotate: getRotate(stickers.aboutAvatar, 10),
-              scale: getScale(stickers.aboutAvatar, 1.0)
-            }}
-            layer={stickers.aboutAvatar?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('aboutAvatar', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('aboutAvatar', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('aboutAvatar', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutAvatar: null };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64Str) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutAvatar: base64Str };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-          />
-        </div>
+        {!stickers.aboutAvatar?.deleted && (
+          <div className={`absolute left-1/2 ml-[65px] md:ml-[115px] top-[10px] select-none ${getZIndexClass(stickers.aboutAvatar?.layer)}`}>
+            <Sticker
+              id="aboutAvatar"
+              src={customImages.aboutAvatar || ASSETS.stickerAvatar}
+              alt="Joseph Hunter Avatar Badge"
+              rotation={getRotate(stickers.aboutAvatar, 10)}
+              scale={getScale(stickers.aboutAvatar, 1.0)}
+              width="w-14 sm:w-16"
+              draggable={isMoveMode}
+              isMoveMode={isMoveMode}
+              onSelect={() => setSelectedSticker('aboutAvatar')}
+              isSelected={selectedSticker === 'aboutAvatar'}
+              onDragEnd={(e, info) => handleDragEnd('aboutAvatar', e, info)}
+              style={{
+                ...getCoords(stickers.aboutAvatar),
+                rotate: getRotate(stickers.aboutAvatar, 10),
+                scale: getScale(stickers.aboutAvatar, 1.0)
+              }}
+              layer={stickers.aboutAvatar?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('aboutAvatar', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('aboutAvatar', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('aboutAvatar', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('aboutAvatar')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutAvatar: null };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64Str) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutAvatar: base64Str };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
 
         {/* 3. Sunglasses skull sticker below Blue folder tab */}
-        <div className={`absolute left-1/2 -ml-[110px] md:-ml-[170px] top-14 md:top-16 select-none ${getZIndexClass(stickers.aboutSkull?.layer)}`}>
-          <Sticker
-            id="aboutSkull"
-            alt="Sunny Skull Sticker"
-            rotation={getRotate(stickers.aboutSkull, -15)}
-            scale={getScale(stickers.aboutSkull, 1.0)}
-            draggable={isMoveMode}
-            isMoveMode={isMoveMode}
-            onSelect={() => setSelectedSticker('aboutSkull')}
-            isSelected={selectedSticker === 'aboutSkull'}
-            onDragEnd={(e, info) => handleDragEnd('aboutSkull', e, info)}
-            customElement={customImages.aboutSkull ? undefined : <SkullSticker />}
-            src={customImages.aboutSkull || undefined}
-            style={{
-              ...getCoords(stickers.aboutSkull),
-              rotate: getRotate(stickers.aboutSkull, -15),
-              scale: getScale(stickers.aboutSkull, 1.0)
-            }}
-            layer={stickers.aboutSkull?.layer || 'front'}
-            onLayerChange={(l) => handleUpdateStickerSetting('aboutSkull', 'layer', l)}
-            onScaleChange={(s) => handleUpdateStickerSetting('aboutSkull', 'scale', s)}
-            onRotateChange={(r) => handleUpdateStickerSetting('aboutSkull', 'rotate', r)}
-            onResetImage={() => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutSkull: null };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-            onUploadImage={(base64Str) => {
-              setCustomImages(prev => {
-                const updated = { ...prev, aboutSkull: base64Str };
-                try {
-                  localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
-                } catch (e) {}
-                return updated;
-              });
-            }}
-          />
-        </div>
+        {!stickers.aboutSkull?.deleted && (
+          <div className={`absolute left-1/2 -ml-[110px] md:-ml-[170px] top-14 md:top-16 select-none ${getZIndexClass(stickers.aboutSkull?.layer)}`}>
+            <Sticker
+              id="aboutSkull"
+              alt="Sunny Skull Sticker"
+              rotation={getRotate(stickers.aboutSkull, -15)}
+              scale={getScale(stickers.aboutSkull, 1.0)}
+              draggable={isMoveMode}
+              isMoveMode={isMoveMode}
+              onSelect={() => setSelectedSticker('aboutSkull')}
+              isSelected={selectedSticker === 'aboutSkull'}
+              onDragEnd={(e, info) => handleDragEnd('aboutSkull', e, info)}
+              customElement={customImages.aboutSkull ? undefined : <SkullSticker />}
+              src={customImages.aboutSkull || undefined}
+              style={{
+                ...getCoords(stickers.aboutSkull),
+                rotate: getRotate(stickers.aboutSkull, -15),
+                scale: getScale(stickers.aboutSkull, 1.0)
+              }}
+              layer={stickers.aboutSkull?.layer || 'front'}
+              onLayerChange={(l) => handleUpdateStickerSetting('aboutSkull', 'layer', l)}
+              onScaleChange={(s) => handleUpdateStickerSetting('aboutSkull', 'scale', s)}
+              onRotateChange={(r) => handleUpdateStickerSetting('aboutSkull', 'rotate', r)}
+              onDelete={() => handleDeleteSticker('aboutSkull')}
+              onResetImage={() => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutSkull: null };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+              onUploadImage={(base64Str) => {
+                setCustomImages(prev => {
+                  const updated = { ...prev, aboutSkull: base64Str };
+                  try {
+                    localStorage.setItem('dost_custom_stickers_v3', JSON.stringify(updated));
+                  } catch (e) {}
+                  return updated;
+                });
+              }}
+            />
+          </div>
+        )}
 
         {/* Content Box - Transparent center-aligned text block */}
         <motion.div
